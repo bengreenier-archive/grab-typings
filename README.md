@@ -14,7 +14,7 @@ just `npm install -g grab-typings` and then `grab-typings` from a project direct
 200 | a:\vs_workspace\grab-typings\typings\node\node.d.ts
 ```
 
-The layout is really simple; `<http status code>` | `<path>`.
+The format is really simple; `<http status code>` | `<path>`.
 
 ## License
 
