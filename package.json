@@ -1,6 +1,6 @@
 {
   "name": "grab-typings",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "grab definitelyTyped typings for each module in package.json.",
   "main": "index.js",
   "scripts": {

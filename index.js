@@ -28,7 +28,7 @@ function proc(pth, body) {
 		var pthdir = path.dirname(pth);
 		fs.mkdirSync(pthdir);
 	}catch(e){}
-	fs.writeFileSync(pth, prom.body);
+	fs.writeFileSync(pth, body);
 	console.log("200 | " + pth);
 }
 
