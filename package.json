@@ -1,0 +1,33 @@
+{
+  "name": "grab-typings",
+  "version": "0.1.0",
+  "description": "grab definitelyTyped typings for each module in package.json.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bengreenier/grab-typings.git"
+  },
+  "keywords": [
+    "definitely",
+    "typed",
+    "typings",
+    "ts",
+    "cli"
+  ],
+  "author": "Ben Greenier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bengreenier/grab-typings/issues"
+  },
+  "homepage": "https://github.com/bengreenier/grab-typings#readme",
+  "dependencies": {
+    "promise": "^7.0.1",
+    "request-promise": "^0.4.2"
+  },
+  "preferGlobal": true,
+  "bin": "index.js"
+}
