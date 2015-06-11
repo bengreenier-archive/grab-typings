@@ -8,6 +8,16 @@ var fs = require('fs');
 var rp = require('request-promise');
 var Promise = require('promise');
 
+var argv = process.argv;
+var e = false;
+
+for (var i = 0 ; i < argv.length ; i++) {
+	if (argv[i].toLowerCase() === "--errors" || argv[i].toLowerCase() === "-e") {
+		e = true;
+		break;
+	}
+}
+
 var pkg = require('./package.json');
 var dir = path.normalize(process.cwd() + "/" + "typings");
 
@@ -29,7 +39,9 @@ function proc(pth, body) {
 		fs.mkdirSync(pthdir);
 	}catch(e){}
 	fs.writeFileSync(pth, body);
-	console.log("200 | " + pth);
+	if (!e) {
+		console.log("200 | " + pth);
+	}
 }
 
 function bproc(path, res) {

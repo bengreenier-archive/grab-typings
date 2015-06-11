@@ -6,6 +6,10 @@ grab definitelyTyped typings for each module in package.json.
 
 just `npm install -g grab-typings` and then `grab-typings` from a project directory (anywhere with a `package.json`).
 
+# options
+
+`-e, --errors` : only prints info for non successful "grabs"
+
 ## Example output
 
 ```bash
