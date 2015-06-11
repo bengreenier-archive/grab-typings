@@ -9,7 +9,7 @@ var rp = require('request-promise');
 var Promise = require('promise');
 
 var pkg = require('./package.json');
-var dir = path.normalize(__dirname + "/" + "typings");
+var dir = path.normalize(process.cwd() + "/" + "typings");
 
 var deps = ["node"];
 for (var prop in pkg["dependencies"]) {
