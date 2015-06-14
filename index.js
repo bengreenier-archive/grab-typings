@@ -10,23 +10,37 @@ var Promise = require('promise');
 
 var argv = process.argv;
 var e = false;
+var modules = [];
 
 for (var i = 0 ; i < argv.length ; i++) {
 	if (argv[i].toLowerCase() === "--errors" || argv[i].toLowerCase() === "-e") {
 		e = true;
 		break;
 	}
+	if (argv[i].toLowerCase() === "--module" || argv[i].toLowerCase() === "-m") {
+		for (var j = i+1 ; j < argv.length ; j++) {
+			if (argv[j].indexOf("-") === 0) break;
+			modules.push(argv[j]);
+		}
+	}
 }
 
-var pkg = require('./package.json');
+var pkg = require(path.normalize(process.cwd() + "/" + "package.json"));
 var dir = path.normalize(process.cwd() + "/" + "typings");
 
+
 var deps = ["node"];
-for (var prop in pkg["dependencies"]) {
-	deps.push(prop);
-}
-for (var prop in pkg["devDependencies"]) {
-	deps.push(prop);
+if (modules.length == 0) { 
+	for (var prop in pkg["dependencies"]) {
+		deps.push(prop);
+	}
+	for (var prop in pkg["devDependencies"]) {
+		deps.push(prop);
+	}
+} else {
+	for (var i = 0 ; i < modules.length ; i++) {
+		deps.push(modules[i]);
+	}
 }
 
 function proc(pth, body) {

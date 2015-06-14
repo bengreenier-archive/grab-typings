@@ -8,7 +8,17 @@ just `npm install -g grab-typings` and then `grab-typings` from a project direct
 
 # options
 
-`-e, --errors` : only prints info for non successful "grabs"
+`-e, --errors` : only prints info for non successful "grabs"  
+```
+grab-typings -e
+```
+
+
+`-m, --module` : only grab typings for specified modules (seperated by space)  
+```
+grab-typings -m mocha node
+```
+
 
 ## Example output
 
