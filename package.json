@@ -1,6 +1,6 @@
 {
   "name": "grab-typings",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "grab definitelyTyped typings for each module in package.json.",
   "main": "index.js",
   "scripts": {
@@ -25,9 +25,13 @@
   },
   "homepage": "https://github.com/bengreenier/grab-typings#readme",
   "dependencies": {
+    "commander": "^2.8.1",
+    "detective": "^4.1.0",
+    "glob": "^5.0.10",
+    "node-core-module-names": "^1.1.0",
     "promise": "^7.0.1",
     "request-promise": "^0.4.2"
   },
   "preferGlobal": true,
-  "bin": "index.js"
+  "bin": {"gt": "index.js", "grab-typings": "index.js"}
 }

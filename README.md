@@ -8,21 +8,34 @@ just `npm install -g grab-typings` and then `grab-typings` from a project direct
 
 # options
 
-`-e, --errors` : only prints info for non successful "grabs"  
-```
-grab-typings -e
-```
+> You can view this yourself with `grab-typings --help`.
+
+> `inject` is currently a beta feature.
+
+```bash
+  Usage: grab-typings|gt [options] [command]
 
 
-`-m, --module` : only grab typings for specified modules (seperated by space)  
-```
-grab-typings -m mocha node
-```
+  Commands:
 
+    grab [modules...]  grab definitions for module(s)
+    inject <glob>      inject reference paths into files that match <glob>
+
+  Grab definitelyTyped typings for package.json dependencies.
+By Ben Greenier
+
+  Options:
+
+    -h, --help        output usage information
+    -V, --version     output the version number
+    -E, --no-success  Show errors only
+    -S, --no-error    Show successes only
+```
 
 ## Example output
 
 ```bash
+$ grab-typings grab
 404 | request-promise/request-promise.d.ts
 404 | promise/promise.d.ts
 200 | a:\vs_workspace\grab-typings\typings\node\node.d.ts
