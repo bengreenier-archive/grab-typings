@@ -102,8 +102,12 @@ function grab(dir, mods, showErrors, showSuccess) {
 function proc(opts, dir, pth, body) {
 	var writePath = path.normalize(dir + "/" + pth);
 	var catchFlag = false;
+	// we swallow dir creation error
 	try{
 		fs.mkdirSync(dir);
+	} catch (e) {}
+	
+	try{
 		var pthdir = path.dirname(writePath);
 		fs.mkdirSync(pthdir);
 		fs.writeFileSync(writePath, body);
