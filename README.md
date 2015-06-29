@@ -21,8 +21,7 @@ just `npm install -g grab-typings` and then `grab-typings` from a project direct
     grab [modules...]  grab definitions for module(s)
     inject <glob>      inject reference paths into files that match <glob>
 
-  Grab definitelyTyped typings for package.json dependencies.
-By Ben Greenier
+  Grab definitelyTyped typings for package.json dependencies. By Ben Greenier
 
   Options:
 
@@ -30,6 +29,8 @@ By Ben Greenier
     -V, --version     output the version number
     -E, --no-success  Show errors only
     -S, --no-error    Show successes only
+    -O, --outdir      Set the output directory. defaults to ./typings
+
 ```
 
 ## Example output
