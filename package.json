@@ -1,8 +1,8 @@
 {
   "name": "grab-typings",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "grab definitelyTyped typings for each module in package.json.",
-  "main": "grab-typings.js",
+  "main": "exports.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node grab-typings.js"
