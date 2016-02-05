@@ -3,6 +3,7 @@ var ts = require('gulp-typescript');
 var del = require('del');
 var fs = require('fs');
 var mocha = require('gulp-mocha');
+var merge2 = require('merge2');
 
 /**
  * Configure your build here
@@ -22,7 +23,10 @@ gulp.task('compile:lib', ['cleanup:dest'], function() {
     
     var tsproj = ts.createProject(tsconfig);
     var tsres = tsproj.src().pipe(ts(tsproj));
-    return tsres.js.pipe(gulp.dest(config.dest, {overwrite: true}));
+    return merge2([
+        tsres.js.pipe(gulp.dest(config.dest+'/test', {overwrite: true})),
+        tsres.dts.pipe(gulp.dest(config.dest+'/def', {overwrite: true}))
+    ]);
 });
 
 /**
