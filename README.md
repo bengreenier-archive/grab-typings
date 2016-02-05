@@ -1,48 +1,39 @@
 # grab-typings
 
-grab definitelyTyped typings for each module in package.json.
+[![Build Status](https://travis-ci.org/bengreenier/grab-typings.svg?branch=master)](https://travis-ci.org/bengreenier/grab-typings)
+
+grab definitelyTyped typings
 
 ## Getting Started
 
-just `npm install -g grab-typings` and then `grab-typings` from a project directory (anywhere with a `package.json`).
+just `npm install -g grab-typings` and then `grab-typings` or `gt` (for short)
+from a project directory (anywhere with a `package.json`).
 
-# options
+# Options
 
-> You can view this yourself with `grab-typings --help`.
+> You can view this yourself with `gt --help`.
 
-> `inject` is currently a beta feature.
-
-```bash
-  Usage: grab-typings|gt [options] [command]
-
-
-  Commands:
-
-    grab [modules...]  grab definitions for module(s)
-    inject <glob>      inject reference paths into files that match <glob>
-
-  Grab definitelyTyped typings for package.json dependencies. By Ben Greenier
-
-  Options:
-
-    -h, --help        output usage information
-    -V, --version     output the version number
-    -E, --no-success  Show errors only
-    -S, --no-error    Show successes only
-    -O, --outdir      Set the output directory. defaults to ./typings
+Passing __no options__ will attempt to parse `packages` from `package.json#dependencies` and `package.json#devDependencies`
+and if entries are found, we'll try to get typings for those.
 
 ```
+$ gt --help
+Usage: grab-typings||gt -s [source] -i [glob] -d [dir] [package(s)]
 
-## Example output
+Options:
+  -s, --source  Specify a source       [string] [default: "https://github.com/borisyankov/DefinitelyTyped/raw/master"]
 
-```bash
-$ grab-typings grab
-404 | request-promise/request-promise.d.ts
-404 | promise/promise.d.ts
-200 | a:\vs_workspace\grab-typings\typings\node\node.d.ts
+  -d, --dir     Specify typings directory to save to                                     [string] [default: "typings"]
+
+  -i, --inject  Inject references into files that match [glob]                                [string] [default: null]
+
+  -h, --help    Show help                                                                                    [boolean]
+
+  --version     Show version number                                                                          [boolean]
+
+
+Made with <3 by @bengreenier
 ```
-
-The format is really simple; `<http status code>` | `<path>`.
 
 ## License
 
