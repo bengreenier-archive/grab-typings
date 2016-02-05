@@ -1,6 +1,6 @@
 {
   "name": "grab-typings",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "grab definitelyTyped typings",
   "main": "./dist/lib/index.js",
   "scripts": {
@@ -27,7 +27,6 @@
   "dependencies": {
     "es6-promise": "^3.0.2",
     "mkdirp": "^0.5.1",
-    "optimist": "^0.6.1",
     "request": "^2.69.0",
     "yargs": "^3.32.0"
   },
