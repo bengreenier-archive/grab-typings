@@ -3,6 +3,9 @@ var ts = require('gulp-typescript');
 var del = require('del');
 var fs = require('fs');
 var mocha = require('gulp-mocha');
+var merge2 = require('merge2');
+var flatten = require('gulp-flatten');
+var rename = require('gulp-rename');
 
 /**
  * Configure your build here
@@ -20,9 +23,22 @@ var config = {
 gulp.task('compile:lib', ['cleanup:dest'], function() {
     var tsconfig = "./tsconfig.json";
     
-    var tsproj = ts.createProject(tsconfig);
-    var tsres = tsproj.src().pipe(ts(tsproj));
-    return tsres.js.pipe(gulp.dest(config.dest, {overwrite: true}));
+    var tsproj = ts.createProject(tsconfig, {declaration: true});
+    var tsres = gulp.src("lib/**/*.ts").pipe(ts(tsproj));
+    return merge2([
+        tsres.js.pipe(gulp.dest(config.dest+'/lib', {overwrite: true})),
+        tsres.dts.pipe(rename(function (path) {
+            // rename index.d to grab-typings.d
+            // rename grab-typings.d to cli.d
+            if (path.basename === 'index.d') {
+                path.basename = "grab-typings.d";
+            } else if (path.basename === 'grab-typings.d') {
+                path.basename = "cli.d";
+            }
+        })).pipe(flatten({
+            newPath: 'grab-typings'
+        })).pipe(gulp.dest(config.dest+'/def', {overwrite: true}))
+    ]);
 });
 
 /**

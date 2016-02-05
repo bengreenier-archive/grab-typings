@@ -26,6 +26,8 @@
   "homepage": "https://github.com/bengreenier/grab-typings#readme",
   "dependencies": {
     "es6-promise": "^3.0.2",
+    "gulp-flatten": "^0.2.0",
+    "gulp-rename": "^1.2.2",
     "mkdirp": "^0.5.1",
     "request": "^2.69.0",
     "yargs": "^3.32.0"
@@ -40,6 +42,7 @@
     "gulp": "^3.9.0",
     "gulp-mocha": "^2.2.0",
     "gulp-typescript": "^2.10.0",
+    "merge2": "^1.0.1",
     "mocha": "^2.4.5"
   }
 }
