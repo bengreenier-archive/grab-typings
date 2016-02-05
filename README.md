@@ -65,18 +65,20 @@ Three easy steps!
 + `var GrabTypings = require('grab-typings')`
 + `new GrabTypings().run(['array','of','args'])` which will return a promise
 
-That's it - see [grab-typings.js](./dist/lib/grab-typings.js) for an example.
+That's it.
 
 ## Typescript
 
 Oh you use typescript too? Cool. You'll want to follow these steps:
 
-+ get the typings file from [dist/grab-typings](./dist/grab-typings)
++ get the typings file from [dist/def/grab-typings](./dist/def/grab-typings)
     - oh hey, there's a tool for that `npm install -g grab-typings`
     - `gt -r https://github.com/bengreenier/grab-typings/raw/master/dist/def grab-typings`
 + `npm install grab-typings`
 + `import {GrabTypings} from 'grab-typings'`
-+ `new GrabTypings().run(['array','of','args'])`
++ `new GrabTypings().run(['array','of','args'])` which will return a promise
+
+That's it. see [lib/grab-typings.ts](./lib/grab-typings.js) for an example.
 
 # License
 
