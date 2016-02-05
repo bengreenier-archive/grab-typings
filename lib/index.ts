@@ -77,8 +77,8 @@ export class GrabTypings {
         var VERSION_STR = "unknown";
         if (fs.existsSync("./package.json")) {
             VERSION_STR = JSON.parse(fs.readFileSync("./package.json").toString()).version;
-        } else if (fs.existsSync("../../package.json")) {
-            VERSION_STR = JSON.parse(fs.readFileSync("../../package.json").toString()).version;
+        } else if (fs.existsSync(__dirname + "/../../package.json")) {
+            VERSION_STR = JSON.parse(fs.readFileSync(__dirname + "/../../package.json").toString()).version;
         }
         this.VERSION_STR = VERSION_STR;
         
