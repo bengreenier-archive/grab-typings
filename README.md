@@ -55,6 +55,29 @@ $ gt
 ✓ mocha
 ```
 
+# API
+
+> Are you a __developer__?! Oh boy! You can use the `grab-typings` API.
+
+Three easy steps!
+
++ `npm install grab-typings`
++ `var GrabTypings = require('grab-typings')`
++ `new GrabTypings().run(['array','of','args'])` which will return a promise
+
+That's it - see [grab-typings.js](./dist/lib/grab-typings.js) for an example.
+
+## Typescript
+
+Oh you use typescript too? Cool. You'll want to follow these steps:
+
++ get the typings file from [dist/grab-typings](./dist/grab-typings)
+    - oh hey, there's a tool for that `npm install -g grab-typings`
+    - `gt -r https://github.com/bengreenier/grab-typings/raw/master/dist grab-typings`
++ `npm install grab-typings`
++ `import {GrabTypings} from 'grab-typings'`
++ `new GrabTypings().run(['array','of','args'])`
+
 # License
 
 MIT
