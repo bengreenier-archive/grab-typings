@@ -71,7 +71,7 @@ That's it.
 
 Oh you use typescript too? Cool. You'll want to follow these steps:
 
-+ get the typings file from [dist/grab-typings](./dist/grab-typings)
++ get the typings file from [dist/def/grab-typings](./dist/def/grab-typings)
     - oh hey, there's a tool for that `npm install -g grab-typings`
     - `gt -r https://github.com/bengreenier/grab-typings/raw/master/dist/def grab-typings`
 + `npm install grab-typings`
