@@ -1,7 +1,7 @@
 {
   "name": "grab-typings",
   "version": "1.0.0",
-  "description": "grab definitelyTyped typings for each module in package.json.",
+  "description": "grab definitelyTyped typings",
   "main": "./dist/lib/index.js",
   "scripts": {
     "test": "mocha ./dist/test",
