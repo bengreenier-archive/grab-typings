@@ -76,7 +76,9 @@ gulp.task('watch:lib', ['compile:lib'], function () {
  */
 gulp.task('test:unit', ['compile:all'], function () {
    return gulp.src(config.dest+'/test/**/*.js', {read: false})
-    .pipe(mocha()); 
+    .pipe(mocha({
+        timeout: 5000
+    })); 
 });
 
 /**

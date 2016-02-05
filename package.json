@@ -1,10 +1,10 @@
 {
   "name": "grab-typings",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "grab definitelyTyped typings",
   "main": "./dist/lib/index.js",
   "scripts": {
-    "test": "gulp compile:all & mocha ./dist/test",
+    "test": "gulp compile:all & mocha ./dist/test --timeout 5000",
     "start": "node ./dist/lib/grab-typings.js"
   },
   "repository": {
