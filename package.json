@@ -5,7 +5,7 @@
   "main": "./dist/lib/index.js",
   "scripts": {
     "test": "gulp test:all",
-    "prepublish": "gulp test:all", 
+    "prepublish": "gulp test:all",
     "start": "node ./dist/lib/grab-typings.js"
   },
   "repository": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/bengreenier/grab-typings#readme",
   "dependencies": {
+    "chalk": "^1.1.1",
     "es6-promise": "^3.0.2",
     "mkdirp": "^0.5.1",
     "request": "^2.69.0",
