@@ -118,7 +118,7 @@ export class GrabTypings {
         
         // since ExtendedArgv has bad var names, we parse them out
         var modules = argv._;
-        var repoSource = argv.s;
+        var repoSource : string[]|string = argv.s;
         var shouldInject = argv.i;
         var writeTo = argv.d;
         
@@ -157,8 +157,11 @@ export class GrabTypings {
                 if (rs.content && rs.status === 200) {
                     this.scanDepDeps(rs.content).then((deps) => {
                         deps.forEach((dep) => {
-                            // add them to proms2 if found
-                            proms2.push(this.getTyping(dep, repoSource));
+                            if (modules.indexOf(dep) === -1) {
+                                // add them to proms2 if found
+                                proms2.push(this.getTyping(dep, repoSource));
+                                modules.push(dep);
+                            }
                         });
                     });
                 }
@@ -198,15 +201,36 @@ export class GrabTypings {
         });
     }
     
-    private getTyping(module : string, repoSource: string) : Promise<RunStatus> {
-        return new Promise<RunStatus>((res, rej) => {
-            // make request
-            request(url.format(url.parse(repoSource+path.normalize("/"+module+"/"+module+".d.ts"))), (err, response, body) => {
-                // handle request
-                if (err) return rej({err: err, module: module});
-                else if (response.statusCode !== 200) return res({status: response.statusCode, module: module});
-                else return res({content: body, status: response.statusCode, module: module});
+    private getTyping(module : string, repoSource: string[]|string) : Promise<RunStatus> {
+        if (typeof(repoSource) === "string") repoSource = [<string>repoSource];
+        
+        // alias a little http.get method
+        var get = function (url : string ) : Promise<{status:number, content:string}> {
+            return new Promise((res, rej) => {
+                request.get(url, (err, response, body) => {
+                    if (err) return rej(err);
+                    if (response.statusCode !== 200) return rej(response.statusCode);
+                    res({status: response.statusCode, content: body});
+                });
             });
+        }
+    
+        // use some promise hackery to create a chain that tries the next repoSource only`
+        // on failure - on success we bypass it
+        var uri = url.format(url.parse(repoSource[0]+path.normalize("/"+module+"/"+module+".d.ts")));
+        var prom = get(uri);
+        for (var i = 1 ; i < repoSource.length ; i++) {
+            var uri = url.format(url.parse(repoSource[i]+path.normalize("/"+module+"/"+module+".d.ts")));
+            prom = prom.catch(get.bind(null, uri));
+        }
+        
+        // if we resolve okay, we process the typing
+        return prom.then((res) => {
+            return {
+                content: res.content,
+                status: res.status,
+                module: module
+            };
         });
     }
     
