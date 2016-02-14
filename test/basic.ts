@@ -55,7 +55,7 @@ describe("GrabTypings", () => {
     it("should grab mocha from alt source", (done) => {
         var i = new GrabTypings();
         // note - we just let this actually install to typings/
-        i.run(["mocha","-r","https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master"])
+        i.run(["mocha","-s","https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master"])
             .then((rr : RunResult) => {
             assert.equal(rr.installed.indexOf("mocha"), 0);
             assert.equal(rr.warnings.length, 0);
