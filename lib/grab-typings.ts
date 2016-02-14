@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/// <reference path="../typings/chalk/chalk.d.ts" />
 /// <reference path="../typings/node/node.d.ts" />
 
 import * as GT from './';
