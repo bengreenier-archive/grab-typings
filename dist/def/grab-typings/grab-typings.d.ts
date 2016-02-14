@@ -49,4 +49,5 @@ export declare class GrabTypings {
     run(args?: string[]): Promise<RunResult>;
     private getTyping(module, repoSource);
     private installModuleDef(module, data, dir);
+    private scanDepDeps(data);
 }
