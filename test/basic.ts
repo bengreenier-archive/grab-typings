@@ -41,6 +41,17 @@ describe("GrabTypings", () => {
         });
     });
     
+    it("should grab request + deps", (done) => {
+        var i = new GrabTypings();
+        // note - we just let this actually install to typings/
+        i.run(["request"]).then((rr : RunResult) => {
+            assert.notEqual(rr.installed.indexOf("node"), -1);
+            assert.notEqual(rr.installed.indexOf("request"), -1);
+            assert.notEqual(rr.installed.indexOf("form-data"), -1);
+            done();
+        });
+    });
+    
     it("should grab mocha from alt source", (done) => {
         var i = new GrabTypings();
         // note - we just let this actually install to typings/
@@ -58,10 +69,10 @@ describe("GrabTypings", () => {
         
         // mock out the install module internal to assert that dir is as expected
         // note - this won't write to disk
-        (<any>i).installModuleDef = (module : string, data : any, dir : string) : Promise<void> => {
-            return new Promise<void>((res, rej) => {
+        (<any>i).installModuleDef = (module : string, data : any, dir : string) : Promise<string> => {
+            return new Promise<string>((res, rej) => {
                 if (dir === "alt") {
-                    res(null);
+                    res(module);
                 } else {
                     rej(new Error("directory("+dir+") wasn't `alt`"));
                 }
@@ -101,5 +112,22 @@ describe("GrabTypings internals", () => {
             assert.equal(stat.err, null);
             done();
         },done);
-    })
+    });
+    it("should handle scanning internal deps ok", (done) => {
+        var defaultSource = GrabTypings.DefaultArguments.s;
+        // note - this won't write to disk
+        // we get request as we know the typings for request depends on form-data
+        // so we can validate internal dep scanning off that (cuz lazy)
+        (<any>GrabTypings.prototype).getTyping("request", defaultSource).then((stat : RunStatus) => {
+            assert.equal(stat.status, 200);
+            assert.equal(stat.err, null);
+            
+            (<any>GrabTypings.prototype).scanDepDeps(stat.content).then((deps : string[]) => {
+                // since this is hard coded, if the request module typings change this test will fail
+                // TODO: use mock data to avoid this (todo cuz lazy)
+                assert.deepEqual(deps, ["node", "form-data"]);
+                done();
+            }, done);
+        },done);
+    });
 })

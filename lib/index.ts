@@ -149,45 +149,51 @@ export class GrabTypings {
             proms.push(this.getTyping(module, repoSource));
         });
         
-        // return a promise that resolves to a RunResult on success
-        // and a specific RunStatus on failure (must be bad failure - not just "missing")
-        return new Promise<RunResult>((res, rej) => {
-            var result : RunResult = {installed: [], missing: [], warnings: []};
-            
-            // if they set shouldInject we trigger a warning - until #1 is done
-            // but we still proceed with other things
-            if (shouldInject) {
-                result.warnings.push("injection not yet available");
-            }
-            
-            // process all the get calls
-            Promise.all(proms).then((runstat : RunStatus[]) => {
-                var runStatPostOps : Promise<void>[] = [];
-                
-                // for each one
-                runstat.forEach((stat) => {
-                    // if it has content and status is 200
-                    if (stat.content && stat.status === 200) {
-                        // schedule post op to write it to writeTo
-                        runStatPostOps.push(this.installModuleDef(stat.module, stat.content, writeTo).then(() => {
-                            result.installed.push(stat.module);
+        var proms2 : Promise<RunStatus>[] = [];
+        
+        // check for dep deps
+        proms.forEach((prom) => {
+            prom.then((rs) => {
+                if (rs.content && rs.status === 200) {
+                    this.scanDepDeps(rs.content).then((deps) => {
+                        deps.forEach((dep) => {
+                            // add them to proms2 if found
+                            proms2.push(this.getTyping(dep, repoSource));
+                        });
+                    });
+                }
+            });
+        });
+        
+        // wait for all modules
+        return Promise.all(proms).then((r1) => {
+            // wait for all modules deps (dep deps)
+            return Promise.all(proms2).then((r2) => {
+                var proms3 : Promise<string>[] = [];
+                var result : RunResult = {installed: [], missing: [], warnings: []};
+                // handle the gets of all things
+                r1.concat(r2).forEach((rs) => {
+                    // if okay, then trigger install
+                    if (rs.content && rs.status === 200) {
+                        proms3.push(this.installModuleDef(rs.module, rs.content, writeTo).then((mod) => {
+                            // if installed, register it as installed in the result
+                            result.installed.push(mod);
+                            return mod;
+                        }, () => {
+                            // if failed, register it as missing
+                            result.missing.push(rs.module);
                         }));
-                    // if status isn't 200
                     } else {
-                        // then record it as missing
-                        result.missing.push(stat.module);
+                        // if not okay, register it as missing
+                        result.missing.push(rs.module);
                     }
                 });
-                
-                // after processing all the calls, resolve the promise
-                Promise.all(runStatPostOps).then(() => {
-                   res(result); 
-                }, (bad:any) => {
-                    rej(bad);
-                });
-            // and handle any bad failures by rejecting the bad RunStatus
-            }, function (runstat : RunStatus) {
-                rej(runstat);
+                // if it should inject, log that we can't yet
+                if (shouldInject) {
+                    result.warnings.push("injection not yet available");
+                }
+                // return
+                return Promise.all(proms3).then(() => { return result; });
             });
         });
     }
@@ -204,19 +210,34 @@ export class GrabTypings {
         });
     }
     
-    private installModuleDef(module : string, data: any, dir : string) : Promise<void> {
+    private installModuleDef(module : string, data: any, dir : string) : Promise<string> {
         var pth = path.normalize(dir+"/"+module+"/"+module+".d.ts");
-        return new Promise<void>((res, rej) => {
+        return new Promise<string>((res, rej) => {
             fs.exists(pth, (exists) => {
-                if (exists) return res(null);
+                if (exists) return res(module);
                 else mkdirp(path.dirname(pth), (err) => {
                     if (err) return rej(err);
                     else fs.writeFile(pth, data, (err) => {
                         if (err) return rej(err);
-                        else return res(null);
+                        else return res(module);
                     });
                 });
             });
+        });
+    }
+    
+    private scanDepDeps(data : string) : Promise<string[]> {
+        return new Promise<string[]>((res, rej) => {
+            var contents = data.toString();
+            var re = /\/\/\/\s<reference path=\"(.+)\"/g;
+            var matched = re.exec(contents);
+            var out : string[] = [];
+            while (matched !== null) {
+                var match = matched[1];
+                out.push(match.substring(match.lastIndexOf("/")+1, match.lastIndexOf(".d.ts")));
+                matched = re.exec(contents);
+            }
+            res(out);
         });
     }
 }
