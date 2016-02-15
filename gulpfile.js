@@ -6,6 +6,7 @@ var mocha = require('gulp-mocha');
 var merge2 = require('merge2');
 var flatten = require('gulp-flatten');
 var rename = require('gulp-rename');
+var replace = require('gulp-replace');
 
 /**
  * Configure your build here
@@ -35,7 +36,14 @@ gulp.task('compile:lib', ['cleanup:dest'], function() {
             } else if (path.basename === 'grab-typings.d') {
                 path.basename = "cli.d";
             }
-        })).pipe(flatten({
+        }))
+        .pipe(replace(/\/\/\/\s<reference path=\"(.+)\"/g, function (matched, thing1) {
+            if (thing1.indexOf("../typings") === 0) {
+                thing1 = thing1.replace("../typings", "..");
+            }
+            return '/// reference path="'+thing1+'">';
+        }))
+        .pipe(flatten({
             newPath: 'grab-typings'
         })).pipe(gulp.dest(config.dest+'/def', {overwrite: true}))
     ]);

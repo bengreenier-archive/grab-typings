@@ -1,8 +1,8 @@
-/// <reference path="../typings/node/node.d.ts" />
-/// <reference path="../typings/yargs/yargs.d.ts" />
-/// <reference path="../typings/request/request.d.ts" />
-/// <reference path="../typings/es6-promise/es6-promise.d.ts" />
-/// <reference path="../typings/mkdirp/mkdirp.d.ts" />
+/// reference path="../node/node.d.ts"> />
+/// reference path="../yargs/yargs.d.ts"> />
+/// reference path="../request/request.d.ts"> />
+/// reference path="../es6-promise/es6-promise.d.ts"> />
+/// reference path="../mkdirp/mkdirp.d.ts"> />
 /**
  * Represents the entirity of a module(s) query
  */
