@@ -1,11 +1,11 @@
 {
   "name": "grab-typings",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "grab definitelyTyped typings",
   "main": "./dist/lib/index.js",
   "scripts": {
     "test": "gulp test:all",
-    "prepublish": "gulp test:all", 
+    "prepublish": "gulp test:all",
     "start": "node ./dist/lib/grab-typings.js"
   },
   "repository": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/bengreenier/grab-typings#readme",
   "dependencies": {
+    "chalk": "^1.1.1",
     "es6-promise": "^3.0.2",
     "mkdirp": "^0.5.1",
     "request": "^2.69.0",
@@ -39,10 +40,11 @@
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.0",
-    "gulp-mocha": "^2.2.0",
-    "gulp-typescript": "^2.10.0",
     "gulp-flatten": "^0.2.0",
+    "gulp-mocha": "^2.2.0",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-typescript": "^2.10.0",
     "merge2": "^1.0.1",
     "mocha": "^2.4.5"
   }
