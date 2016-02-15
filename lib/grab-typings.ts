@@ -18,7 +18,7 @@ new GT.GrabTypings().run(process.argv.slice(2)).then((rr : GT.RunResult) => {
         console.log(chalk.green("\u2713 ")+m);
     });
     rr.warnings.forEach((message : string) => {
-        console.warn(message);
+        console.warn(chalk.yellow(message));
     });
     rr.missing.forEach((m : string) => {
         // x <module>
