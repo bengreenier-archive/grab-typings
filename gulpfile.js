@@ -35,6 +35,8 @@ gulp.task('compile:lib', ['cleanup:dest'], function() {
                 path.basename = "grab-typings.d";
             } else if (path.basename === 'grab-typings.d') {
                 path.basename = "cli.d";
+            } else if (path.basename === 'grab-typings-logic.d') {
+                path.basename = "cli-logic.d";
             }
         }))
         .pipe(replace(/\/\/\/\s<reference path=\"(.+)\"/g, function (matched, thing1) {

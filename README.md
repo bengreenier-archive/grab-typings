@@ -78,7 +78,7 @@ Oh you use typescript too? Cool. You'll want to follow these steps:
 + `import {GrabTypings} from 'grab-typings'`
 + `new GrabTypings().run(['array','of','args'])` which will return a promise
 
-That's it. see [lib/grab-typings.ts](./lib/grab-typings.ts) for an example.
+That's it. see [lib/grab-typings.ts](./lib/grab-typings-logic.ts) for an example.
 
 # License
 
