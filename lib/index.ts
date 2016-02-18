@@ -209,7 +209,6 @@ export class GrabTypings {
             return new Promise((res, rej) => {
                 request.get(url, (err, response, body) => {
                     if (err) return rej(err);
-                    if (response.statusCode !== 200) return rej(response.statusCode);
                     res({status: response.statusCode, content: body});
                 });
             });
