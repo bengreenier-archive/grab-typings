@@ -75,10 +75,10 @@ export class GrabTypings {
         // generating the version string is kind of a pain because of where
         // we compile to. as such, we do some janky stuff here
         var VERSION_STR = "unknown";
-        if (fs.existsSync("./package.json")) {
-            VERSION_STR = JSON.parse(fs.readFileSync("./package.json").toString()).version;
-        } else if (fs.existsSync(__dirname + "/../../package.json")) {
+        if (fs.existsSync(__dirname + "/../../package.json")) {
             VERSION_STR = JSON.parse(fs.readFileSync(__dirname + "/../../package.json").toString()).version;
+        } else if (fs.existsSync("./package.json")) {
+            VERSION_STR = JSON.parse(fs.readFileSync("./package.json").toString()).version;
         }
         this.VERSION_STR = VERSION_STR;
         
